@@ -1,13 +1,11 @@
 # query_builder: golang查询构造器
 
 > 为了脱离框架束缚, 随处使用自己喜欢的方式查询数据, 我封装了这个库
- 
 > 支持链式增删改查, 但链式查询器不支持连表, 本人不鼓励使用此方法进行复杂查询; 对于复杂查询, 推荐使用原生SQL
-
 > 使用Any类型储存查询结果, 方便数据转换
 
 ### Install
-```bash
+```shell
 go get github.com/lxzan/query_builder
 ```
 
