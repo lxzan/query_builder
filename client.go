@@ -3,12 +3,12 @@ package db
 import (
 	q "database/sql"
 	_ "github.com/go-sql-driver/mysql"
-	"strings"
-	"sort"
 	"regexp"
+	"sort"
+	"strings"
 )
 
-var conns []*q.DB
+var conns = make([]*q.DB, 0)
 
 func Connect(opt *ConnectOption) *q.DB {
 	dsn := Build("{user}:{password}@tcp({host}:{port})/{database}?charset={charset}", Form{
@@ -35,7 +35,7 @@ func Connect(opt *ConnectOption) *q.DB {
 
 func ConnectCluster(opts []*ConnectOption) {
 	var count = len(opts)
-	conns = make([]*q.DB, count)
+	conns = make([]*q.DB, 0)
 	for i := 0; i < count; i++ {
 		Connect(opts[i])
 	}
@@ -47,7 +47,7 @@ func Master() *q.DB {
 
 func Slave() *q.DB {
 	var count = len(conns)
-	if count == 0 {
+	if count == 1 {
 		return conns[0]
 	}
 	var index = Rand(1, count-1)
